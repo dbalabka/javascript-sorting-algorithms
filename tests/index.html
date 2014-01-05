@@ -6,6 +6,7 @@
 </head>
 <body>
 <div id="mocha"></div>
+<div id="benchmark"></div>
 <script src="../bower_components/jquery/jquery.js"></script>
 <script src="../bower_components/mocha/mocha.js"></script>
 <script src="../bower_components/chai/chai.js"></script>
@@ -14,12 +15,12 @@
 <script src="../src/helpers.js"></script>
 <script>mocha.setup('bdd')</script>
 <script src="test.sort.js"></script>
-<script src="benchmark.sort.js"></script>
 <script>
     var assert = chai.assert;
     mocha.checkLeaks();
     mocha.globals(['jQuery']);
     mocha.run();
 </script>
+<script src="benchmark.sort.js"></script>
 </body>
 </html>
