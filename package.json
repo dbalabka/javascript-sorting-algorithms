@@ -1,0 +1,8 @@
+{
+    "name": "javascript sorting algorithms implementation",
+    "version": "0.1.0",
+    "devDependencies": {
+        "mocha": "mocha#~1.16.2",
+        "chai": "chai#~1.8.1"
+    }
+}
