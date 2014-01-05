@@ -15,12 +15,15 @@
 <script src="../src/helpers.js"></script>
 <script>mocha.setup('bdd')</script>
 <script src="test.sort.js"></script>
+<script src="benchmark.sort.js"></script>
 <script>
     var assert = chai.assert;
     mocha.checkLeaks();
     mocha.globals(['jQuery']);
-    mocha.run();
+    mocha.run(function () {
+        // run async
+        benchmarkSuite.run({ 'async': true });
+    });
 </script>
-<script src="benchmark.sort.js"></script>
 </body>
 </html>

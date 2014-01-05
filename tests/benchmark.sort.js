@@ -13,12 +13,12 @@ helpers.arrayRandom = function (size) {
     return arr;
 };
 
-var suite = new Benchmark.Suite('Sorting benchmark');
+var benchmarkSuite = new Benchmark.Suite('Sorting benchmark');
 
 var testArray = helpers.arrayRandom(10000);
 
 // add tests
-suite
+benchmarkSuite
     .add('Bubble sort', function() {
         var arr = testArray.slice(0);
         arr.bubbleSort();
@@ -60,6 +60,4 @@ suite
     })
     .on('complete', function() {
         $('#benchmark').append('<div><strong>Fastest is ' + this.filter('fastest').pluck('name') + '</strong></div>');
-    })
-    // run async
-    .run({ 'async': true });
+    });

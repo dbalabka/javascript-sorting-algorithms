@@ -2,13 +2,17 @@
  * Bubble sort(optimized)
  * @returns {Array} implements fluid interface
  */
-Array.prototype.bubbleSort = function ()
+Array.prototype.bubbleSort = function (callback)
 {
-    var n = this.length;
+    callback || (callback = function(i, j){
+        return i-j;
+    });
+    var n = this.length, result;
     do {
         var swapped = false;
         for (var i = 1; i < n; i++ ) {
-            if (this[i - 1] > this[i]) {
+            result = callback.call(callback, this[i - 1], this[i]);
+            if (result > 0) {
                 var tmp = this[i-1];
                 this[i-1] = this[i];
                 this[i] = tmp;
@@ -23,8 +27,11 @@ Array.prototype.bubbleSort = function ()
  * Shell sorting.
  * @returns {Array} implements fluid interface
  */
-Array.prototype.shellSort = function ()
+Array.prototype.shellSort = function (callback)
 {
+    callback || (callback = function(i, j){
+        return i-j;
+    });
     var lastKey = this.length -1,
         inc = Math.round(this.length / 2),
         temp, j, i;
@@ -32,7 +39,7 @@ Array.prototype.shellSort = function ()
         for (i = inc; i <= lastKey; i++) {
             temp = this[i];
             j = i;
-            while (j >= inc && this[j - inc] > temp) {
+            while (j >= inc && callback.call(callback, this[j - inc], temp) > 0) {
                 this[j] = this[j - inc];
                 j = j - inc;
             }
@@ -270,14 +277,12 @@ Array.prototype.quickSortDualPivot = function (callback) {
  */
 Array.prototype._quickSortDualPivot = function (lowIndex, highIndex, callback) {
 
-    var result;
     if (highIndex <= lowIndex) {
         return;
     }
-
-    var pivot1 = this[lowIndex];
-    var pivot2 = this[highIndex];
-
+    var result,
+        pivot1 = this[lowIndex],
+        pivot2 = this[highIndex];
 
     result = callback.call(callback, pivot2, pivot1);
     if (result < 0) {
@@ -292,19 +297,21 @@ Array.prototype._quickSortDualPivot = function (lowIndex, highIndex, callback) {
         }
     }
 
-
     var i = lowIndex + 1;
     var lt = lowIndex + 1;
     var gt = highIndex - 1;
 
     while (i <= gt) {
-
-        if (this[i] < pivot1) {
+        result = callback.call(callback, this[i], pivot1);
+        if (result < 0) {
             this.swap(i++, lt++);
-        } else if (pivot2 < this[i]) {
-            this.swap(i, gt--);
         } else {
-            i++;
+            result = callback.call(callback, this[i], pivot2);
+            if (result > 0) {
+               this.swap(i, gt--);
+            } else {
+                i++;
+            }
         }
 
     }
